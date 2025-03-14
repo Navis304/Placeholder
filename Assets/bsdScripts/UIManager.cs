@@ -30,10 +30,18 @@ public class UIManager : MonoBehaviour
         if (!menuObj.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
         {
             menuObj.SetActive(true);
+            GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = false;
+            GameObject.Find("Player").GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else if(menuObj.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
         {
             menuObj.SetActive(false);
+            GameObject.Find("Player").GetComponent<PlayerMovement>().enabled = true;
+            GameObject.Find("Player").GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
     public void TextWriter(string textToWrite)

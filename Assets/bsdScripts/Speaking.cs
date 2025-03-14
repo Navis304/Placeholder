@@ -9,7 +9,8 @@ public class Speaking : MonoBehaviour
     private void Start()
     {
         uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        orderScript = GameObject.Find("Order").GetComponent<Order>();
+        // orderScript = GameObject.Find("Order").GetComponent<Order>();
+        SpeakAction();
     }
     public void SpeakAction()
     {
@@ -19,12 +20,12 @@ public class Speaking : MonoBehaviour
         {
             if(orderScript.orderQuantity > 1)
             {
-                uIManager.TextWriter(uIManager.npcNormalTalk[0] + orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType);
+                uIManager.TextWriter($"{uIManager.npcNormalTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.npcNormalTalk[1]}a.");
                 orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType;
             }
             else
             {
-                uIManager.TextWriter(uIManager.npcNormalTalk[0] + orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType);
+                uIManager.TextWriter($"{uIManager.npcNormalTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.npcNormalTalk[1]}o.");
                 orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType;
             }
         }
@@ -44,7 +45,7 @@ public class Speaking : MonoBehaviour
     }
     public void GetOrder()
     {
-        //funkcja do odbierania zamówien
+        //funkcja do odbierania zamï¿½wien
 
     }
     
