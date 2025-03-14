@@ -1,0 +1,51 @@
+using UnityEngine;
+using System.Collections;
+using TMPro;
+public class Speaking : MonoBehaviour
+{
+    [SerializeField] private string whatKindOfDialog;
+    [SerializeField] private UIManager uIManager;
+    [SerializeField] private Order orderScript;
+    private void Start()
+    {
+        uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        orderScript = GameObject.Find("Order").GetComponent<Order>();
+    }
+    public void SpeakAction()
+    {
+        orderScript.orderQuantity = Random.Range(1,4);
+        orderScript.orderType = orderScript.types[Random.Range(0, 3)];
+        if(whatKindOfDialog == "normal")
+        {
+            if(orderScript.orderQuantity > 1)
+            {
+                uIManager.TextWriter(uIManager.npcNormalTalk[0] + orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType);
+                orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType;
+            }
+            else
+            {
+                uIManager.TextWriter(uIManager.npcNormalTalk[0] + orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType);
+                orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType;
+            }
+        }
+        else if (whatKindOfDialog == "special")
+        {
+            if (orderScript.orderQuantity > 1)
+            {
+                uIManager.TextWriter(uIManager.specialNpcTalk[uIManager.dayCounter][0] + orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "a " + orderScript.orderType);
+                orderScript.orderDesc = orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "a " + orderScript.orderType;
+            }
+            else
+            {
+                uIManager.TextWriter(uIManager.specialNpcTalk[uIManager.dayCounter][0] + orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "o " + orderScript.orderType);
+                orderScript.orderDesc = orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "o " + orderScript.orderType;
+            }
+        }
+    }
+    public void GetOrder()
+    {
+        //funkcja do odbierania zamówien
+
+    }
+    
+}
