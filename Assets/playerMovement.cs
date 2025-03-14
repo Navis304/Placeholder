@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour {
     
     //Input
     float x, y;
-    bool jumping, sprinting, crouching;
+    bool jumping, sprinting, crouching = false;
     
     //Sliding
     private Vector3 normalVector = Vector3.up;
@@ -74,13 +74,13 @@ public class PlayerMovement : MonoBehaviour {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
         jumping = Input.GetButton("Jump");
-        crouching = Input.GetKey(KeyCode.LeftControl);
+        //crouching = Input.GetKey(KeyCode.LeftControl);
       
-        //Crouching
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            StartCrouch();
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-            StopCrouch();
+        // //Crouching
+        // if (Input.GetKeyDown(KeyCode.LeftControl))
+        //     StartCrouch();
+        // if (Input.GetKeyUp(KeyCode.LeftControl))
+        //     StopCrouch();
     }
 
     private void StartCrouch() {
