@@ -9,5 +9,7 @@ public class PickableObject : MonoBehaviour
 
     public Sprite icon;
 
+    public string buyable;
+
     
 }

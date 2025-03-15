@@ -3,19 +3,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 public class playerInventory : MonoBehaviour
 {
     public PickableObject[] inventory = new PickableObject[5];
 
     public PickableObject selectedItem = null;
+    public int sid = 0;
     int maxIndex = 80;
     public Transform inn;
     public Transform outt;
     public GameObject podT;
     public GameObject water;
     public GameObject zboze;
-
+    public Transform inventoryUI;
     public GameObject alerttext;
+    public Sprite nothing;
+    public GameObject[] children;
+
+    public bool inventoryFull = false;
+
+    public Prices shop;
+
+
+    // public void Start () {
+    //     children = inventoryUI.GetComponentsInChildren<Image>();
+    // }
 
     public void Update()
     {
@@ -39,6 +52,7 @@ public class playerInventory : MonoBehaviour
                     else if (obj.text == "Otwórz") Otworz(obj);
                     else if (obj.text == "Zamknij") Zamknij(obj);
                     else if (obj.text == "Dosyp") Dosyp(obj);
+                    else if (obj.text == "Kup") Kup(obj);
                     
                 }
             }
@@ -50,11 +64,43 @@ public class playerInventory : MonoBehaviour
         
 
 
-        // if(Input.GetKeyDown(KeyCode.Space))
-        // {
-        //     PickableObject obj = GameObject.Find("dupa").GetComponent<PickableObject>();
-        //     pickup(obj);
-        // }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            chooseSlot(0);
+            
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            chooseSlot(1);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            chooseSlot(2);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            chooseSlot(3);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            chooseSlot(4);
+        }
+
+       
+    }
+
+    public void chooseSlot(int i)
+    {
+        selectedItem = inventory[i];
+        sid = i;
+        foreach (GameObject item in children)
+        {
+            item.GetComponent<Outline>().enabled = false;
+            
+        }
+        // Debug.Log(i);
+        children[i].GetComponent<Outline>().enabled = true;
     }
 
     public void Otworz(PickableObject obj)
@@ -65,9 +111,25 @@ public class playerInventory : MonoBehaviour
 
     public void Nalej(PickableObject obj)
     {
-        Debug.Log("Nalano wode");
-        water.SetActive(true);
-        obj.text = "Dosyp";
+        if(selectedItem != null)
+        {
+            if(selectedItem.objectName == "Wiadro")
+            {
+                Debug.Log("Nalano wode");
+                water.SetActive(true);
+                obj.text = "Dosyp";
+                DeleteItem(sid);
+            }
+            else alert("Musisz trzymać wiadro z wodą.");
+        }
+        else alert("Musisz trzymać wiadro z wodą.");
+        
+    }
+
+    public void Kup(PickableObject obj)
+    {
+        if(!inventoryFull) shop.buy(obj, this);
+        else alert("Nie ma miejsca w ekwipunku.");
     }
 
     public void Dosyp(PickableObject obj)
@@ -89,6 +151,13 @@ public class playerInventory : MonoBehaviour
         water.SetActive(false);
     }
 
+    public void DeleteItem(int i)
+    {
+        inventory[i] = null;
+        children[i].transform.GetComponentsInChildren<Image>()[1].sprite = nothing;
+        inventoryFull = false;
+    }
+
     public void alert(string text)
     {
         StartCoroutine(AlertCoroutine(text));
@@ -105,7 +174,10 @@ public class playerInventory : MonoBehaviour
 
     public void pickup(PickableObject obj)
     {
+        selectedItem = inventory[sid];
         maxIndex = 9999;
+
+
         
         for (int i = 0; i < inventory.Length; i++)
         {
@@ -121,7 +193,7 @@ public class playerInventory : MonoBehaviour
             
             Debug.Log(maxIndex);
             inventory[maxIndex] = obj;
-            
+            children[maxIndex].transform.GetComponentsInChildren<Image>()[1].sprite = obj.icon;
             obj.transform.parent = transform;
             obj.transform.position = new Vector3(0, 0, 0);
             obj.gameObject.SetActive(false);
@@ -129,7 +201,8 @@ public class playerInventory : MonoBehaviour
             refreshInv();
         }
         else {
-            Debug.Log("Inventory full.");
+            inventoryFull = true;
+            alert("Nie ma miejsca w ekwipunku.");
         }
         
     }
