@@ -11,12 +11,14 @@ public class CustomerAI : MonoBehaviour
     public int currentPosInQueue;
     private Transform player;
     public Transform awayFromMap;
+    public bool isSpecial;
     private void Awake()
     {
         customerAI = this.gameObject.GetComponent<NavMeshAgent>();
         anim = this.gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         queueS = GameObject.Find("Q").GetComponent<Queue>();
+        awayFromMap = GameObject.Find("AwayFromMap").GetComponent<Transform>();
         Invoke("AwakeDel", Random.Range(0.1f, 0.3f));
     }
     private void Update()
@@ -39,7 +41,7 @@ public class CustomerAI : MonoBehaviour
         }
         if(state == "getOut")
         {
-            if(Vector3.Distance(this.gameObject.transform.position,player.position) > 20f)
+            if(Vector3.Distance(this.gameObject.transform.position,player.position) > 30f)
             {
                 Destroy(this.gameObject);
             }
