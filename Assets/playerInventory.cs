@@ -136,8 +136,12 @@ public class playerInventory : MonoBehaviour
     {
         if(selectedItem != null)
         {
-            if(selectedItem.objectName == "Zboże") zboze.SetActive(true);
-            else alert("Musisz trzymać zboże.");
+            if(selectedItem.objectName == "Jęczmień") {
+                water.SetActive(false);
+                zboze.SetActive(true);
+                obj.text = "Zabierz do suszenia";
+            }
+            else alert("Musisz trzymać jakiś rodzaj zboża.");
             
         }
         else alert("Musisz trzymać zboże.");
