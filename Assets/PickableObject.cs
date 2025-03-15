@@ -5,6 +5,8 @@ public class PickableObject : MonoBehaviour
 {
     public string objectName = "";
 
+    public string text = "";
+
     public Sprite icon;
 
     

@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 public class playerInventory : MonoBehaviour
 {
     public PickableObject[] inventory = new PickableObject[5];
@@ -15,13 +16,20 @@ public class playerInventory : MonoBehaviour
         RaycastHit rh;
         if (Physics.Linecast(inn.position, outt.position, out rh))
         {
-            podT.SetActive(true);
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                PickableObject obj = rh.collider.gameObject.GetComponent<PickableObject>();
-                if(obj != null) pickup(obj);
-            }
             
+            
+            PickableObject obj = rh.collider.gameObject.GetComponent<PickableObject>();
+            if(obj != null)
+                podT.GetComponentInChildren<TMP_Text>().text = "E   " + obj.text;
+                podT.SetActive(true);
+               
+                if(Input.GetKeyDown(KeyCode.E))
+                {   
+                    if(obj.text == "Podnieś") pickup(obj);
+                    else if (obj.text == "Nalej") Nalej(obj);
+                    
+                }
+               
         }
         else {
             podT.SetActive(false);
@@ -34,6 +42,11 @@ public class playerInventory : MonoBehaviour
         //     PickableObject obj = GameObject.Find("dupa").GetComponent<PickableObject>();
         //     pickup(obj);
         // }
+    }
+
+    public void Nalej(PickableObject obj)
+    {
+        Debug.Log("Nalano wode");
     }
 
     public void pickup(PickableObject obj)
