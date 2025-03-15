@@ -11,7 +11,9 @@ public class Prices : MonoBehaviour
             case "wheat":
                 return 3.30f;
             case "hop":
-                return 3.50f; 
+                return 3.50f;
+            case "sprzedarz":
+                return -8.0f;
             default:
                 return 999999f;
         }
@@ -28,6 +30,11 @@ public class Prices : MonoBehaviour
         }
         else script.alert("Nie stać cię na to.");
         
+    }
+
+    public void sell(float amount)
+    {
+        mm.Gain(amount);
     }
     
 }

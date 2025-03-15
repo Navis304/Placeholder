@@ -4,7 +4,7 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] public string[] npcNormalTalk;
-    [SerializeField] public string[][] specialNpcTalk;
+    [SerializeField] public string[]  specialNpcTalk;
     [SerializeField] private GameObject menuObj;
     [SerializeField] public int textSpeedOption = 2;
     [SerializeField] public TMP_Text chatbox;
@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             fSkip = true;
+            
         }
         if(fSkip && Input.GetKeyDown(KeyCode.Return))
         {
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        
     }
     public void TextWriter(string textToWrite)
     {
@@ -59,6 +61,8 @@ public class UIManager : MonoBehaviour
             StopAllCoroutines();
             chatbox.text = text;
             eneded = true;
+            eneded = false;
+            fSkip = false;
         }
         else
         {

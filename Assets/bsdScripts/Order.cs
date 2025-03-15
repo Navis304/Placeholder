@@ -6,6 +6,7 @@ public class Order : MonoBehaviour
     public int orderQuantity;
     public string orderType;
     public string orderDesc;
+    public CustomerAI cai;
     public string[] types;
     public TMP_Text orderTextHelp;
     private void Update()

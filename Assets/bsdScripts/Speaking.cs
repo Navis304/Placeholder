@@ -5,8 +5,9 @@ public class Speaking : MonoBehaviour
 {
     [SerializeField] private string whatKindOfDialog;
     [SerializeField] private UIManager uIManager;
-    [SerializeField] private Order orderScript;
+    [SerializeField] public Order orderScript;
     [SerializeField] private GameObject blob;
+    
     private void Start()
     {
         uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -23,27 +24,30 @@ public class Speaking : MonoBehaviour
             if(orderScript.orderQuantity > 1)
             {
                 uIManager.TextWriter($"{uIManager.npcNormalTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.npcNormalTalk[1]}a.");
-                orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType;
+                orderScript.orderDesc = orderScript.orderQuantity + " " + uIManager.npcNormalTalk[1] + "a " + orderScript.orderType;
             }
             else
             {
                 uIManager.TextWriter($"{uIManager.npcNormalTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.npcNormalTalk[1]}o.");
-                orderScript.orderDesc = orderScript.orderQuantity + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType;
+                orderScript.orderDesc = orderScript.orderQuantity + " " + uIManager.npcNormalTalk[1] + "o " + orderScript.orderType;
             }
+            orderScript.orderSet = true;
         }
         else if (whatKindOfDialog == "special")
         {
             if (orderScript.orderQuantity > 1)
             {
-                uIManager.TextWriter(uIManager.specialNpcTalk[uIManager.dayCounter][0] + orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "a " + orderScript.orderType);
-                orderScript.orderDesc = orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "a " + orderScript.orderType;
+                uIManager.TextWriter($"{uIManager.specialNpcTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.specialNpcTalk[1]}a.");
+                orderScript.orderDesc = orderScript.orderQuantity + " " + uIManager.specialNpcTalk[1] + "a " + orderScript.orderType;
             }
             else
             {
-                uIManager.TextWriter(uIManager.specialNpcTalk[uIManager.dayCounter][0] + orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "o " + orderScript.orderType);
-                orderScript.orderDesc = orderScript.orderQuantity + uIManager.specialNpcTalk[uIManager.dayCounter][1] + "o " + orderScript.orderType;
+                uIManager.TextWriter($"{uIManager.specialNpcTalk[0]} {orderScript.orderQuantity} {orderScript.orderType} {uIManager.specialNpcTalk[1]}a.");
+                orderScript.orderDesc = orderScript.orderQuantity + " " + uIManager.specialNpcTalk[1] + "o " + orderScript.orderType;
             }
+            orderScript.orderSet = true;
         }
+       
     }
     public void GetOrder()
     {

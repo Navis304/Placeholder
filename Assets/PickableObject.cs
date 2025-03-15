@@ -11,5 +11,8 @@ public class PickableObject : MonoBehaviour
 
     public string buyable;
 
+    public string typ_piwa;
+    public int quantity;
+
     
 }

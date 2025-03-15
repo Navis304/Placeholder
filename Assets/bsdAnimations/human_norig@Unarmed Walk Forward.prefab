@@ -842,6 +842,7 @@ GameObject:
   - component: {fileID: 1179390827341384123}
   - component: {fileID: 5109847088209950515}
   - component: {fileID: -6100973011113252015}
+  - component: {fileID: -4991129941745752739}
   m_Layer: 0
   m_Name: human_norig@Unarmed Walk Forward
   m_TagString: Customer
@@ -969,6 +970,23 @@ MonoBehaviour:
   whatKindOfDialog: normal
   uIManager: {fileID: 0}
   orderScript: {fileID: 0}
+  blob: {fileID: 0}
+--- !u!114 &-4991129941745752739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138240283882090588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc52eef9e4cd0943aa39670655ff5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Chlop
+  text: Rozmawiaj
+  icon: {fileID: 0}
+  buyable: 
 --- !u!1 &5691687858412427225
 GameObject:
   m_ObjectHideFlags: 0

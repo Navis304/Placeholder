@@ -22,8 +22,17 @@ public class playerInventory : MonoBehaviour
     public GameObject[] children;
 
     public bool inventoryFull = false;
+    public GameObject Piwko;
 
     public Prices shop;
+
+    public Order order;
+    public GameObject fert;
+    public GameObject monk;
+    public GameObject preChmiel;
+    public PickableObject beczka;
+
+    public int chmielCounter = 0;
 
 
     // public void Start () {
@@ -53,6 +62,12 @@ public class playerInventory : MonoBehaviour
                     else if (obj.text == "Zamknij") Zamknij(obj);
                     else if (obj.text == "Dosyp") Dosyp(obj);
                     else if (obj.text == "Kup") Kup(obj);
+                    else if (obj.text == "Rozmawiaj") talk(obj);
+                    else if (obj.text == "Wręcz zamówienie") serve(obj);
+                    else if (obj.text == "Zabierz do suszenia") ferment(obj);
+                    else if (obj.text == "Suszenie") dry(obj);
+                    else if (obj.text == "Zalej wodą") monka(obj);
+                    else if (obj.text == "Dodaj chmiel") chmiel(obj);
                     
                 }
             }
@@ -130,6 +145,80 @@ public class playerInventory : MonoBehaviour
     {
         if(!inventoryFull) shop.buy(obj, this);
         else alert("Nie ma miejsca w ekwipunku.");
+    }
+
+    // GameObject piwko = Instantiate(Piwko, transform.position + transform.forward, transform.rotation);
+
+    public void dry(PickableObject obj)
+    {
+        
+        // piwko.GetComponent<PickableObject>().quantity = 2;
+        // piwko.GetComponent<PickableObject>().typ_piwa = "gorzkie";
+        beczka.text = "Zalej wodą";
+        water.SetActive(true);
+        fert.SetActive(false);
+
+        
+        GameObject nowy_m = Instantiate(monk, new Vector3(0,0,0), transform.rotation);
+        pickup(nowy_m.GetComponent<PickableObject>());
+        DeleteItem(sid);
+    }
+        
+        
+    public void chmiel(PickableObject obj)
+    {
+        if(selectedItem.objectName == "Chmiel")
+        {
+            chmielCounter += 1;
+        }
+
+        
+    }
+
+    
+
+    public void ferment(PickableObject obj) {
+        GameObject nowy_f = Instantiate(fert, new Vector3(0,0,0), transform.rotation);
+        pickup(nowy_f.GetComponent<PickableObject>());
+    }
+
+    public void talk(PickableObject obj)
+    {
+        if(!obj.gameObject.GetComponent<Speaking>().orderScript.orderSet) 
+        {
+            order.cai = obj.gameObject.GetComponent<CustomerAI>();
+            obj.gameObject.GetComponent<Speaking>().SpeakAction();
+            obj.text = "Wręcz zamówienie";
+        }
+
+    }
+
+    public void monka(PickableObject obj) {
+        water.SetActive(false);
+        preChmiel.SetActive(true);
+        beczka.text = "Dodaj chmiel";
+    }
+
+    public void serve(PickableObject obj)
+    {
+        // Debug.Log("ORDER TYPE " +order.orderType);
+        // Debug.Log("ORDER QUANT " +order.orderQuantity);
+        // Debug.Log("OBJ TYPE " +selectedItem.typ_piwa);
+        // Debug.Log("OBJ QUANT " +selectedItem.quantity);
+        Debug.Log(order.orderType == selectedItem.typ_piwa);
+        Debug.Log(order.orderQuantity == selectedItem.quantity);
+
+        if(order.orderType == selectedItem.typ_piwa && order.orderQuantity == selectedItem.quantity)
+        {
+            order.orderSet = false;
+            order.cai.RidOfCustomerFromQueue();
+
+            
+            shop.sell(8.0f);
+        }
+        else {
+            Debug.Log("err");
+        }
     }
 
     public void Dosyp(PickableObject obj)
