@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] public bool fSkip = false;
     [SerializeField] public bool eneded = false;
     [SerializeField] public int dayCounter = 0;
+    [SerializeField] public bool isNight = true; 
     private void Start()
     {
         //TextWriter("Siema ja robert sie nazywam :3");
