@@ -6,12 +6,16 @@ using TMPro;
 public class playerInventory : MonoBehaviour
 {
     public PickableObject[] inventory = new PickableObject[5];
+
+    public PickableObject selectedItem = null;
     int maxIndex = 80;
     public Transform inn;
     public Transform outt;
     public GameObject podT;
-
     public GameObject water;
+    public GameObject zboze;
+
+    public GameObject alerttext;
 
     public void Update()
     {
@@ -26,7 +30,7 @@ public class playerInventory : MonoBehaviour
 
             
                 podT.GetComponentInChildren<TMP_Text>().text = "E  " + obj.text;
-                podT.SetActive(true);
+                if (obj.text != "")podT.SetActive(true);
                
                 if(Input.GetKeyDown(KeyCode.E))
                 {   
@@ -34,6 +38,7 @@ public class playerInventory : MonoBehaviour
                     else if (obj.text == "Nalej") Nalej(obj);
                     else if (obj.text == "Otwórz") Otworz(obj);
                     else if (obj.text == "Zamknij") Zamknij(obj);
+                    else if (obj.text == "Dosyp") Dosyp(obj);
                     
                 }
             }
@@ -62,7 +67,19 @@ public class playerInventory : MonoBehaviour
     {
         Debug.Log("Nalano wode");
         water.SetActive(true);
-        obj.text = "Zamknij";
+        obj.text = "Dosyp";
+    }
+
+    public void Dosyp(PickableObject obj)
+    {
+        if(selectedItem != null)
+        {
+            if(selectedItem.objectName == "Zboże") zboze.SetActive(true);
+            else alert("Musisz trzymać zboże.");
+            
+        }
+        else alert("Musisz trzymać zboże.");
+
     }
 
     public void Zamknij(PickableObject obj)
@@ -70,6 +87,20 @@ public class playerInventory : MonoBehaviour
         obj.gameObject.GetComponentInChildren<Animator>().SetTrigger("close");
         obj.text = "Otwórz";
         water.SetActive(false);
+    }
+
+    public void alert(string text)
+    {
+        StartCoroutine(AlertCoroutine(text));
+    }
+
+    public IEnumerator AlertCoroutine(string text)
+    {
+        alerttext.GetComponent<TMP_Text>().text = text;
+        alerttext.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        alerttext.SetActive(false);
+
     }
 
     public void pickup(PickableObject obj)
