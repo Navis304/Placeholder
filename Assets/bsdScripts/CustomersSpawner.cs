@@ -11,6 +11,7 @@ public class CustomersSpawner : MonoBehaviour
     public bool spawning = false;
     public bool onecSpec = true;
     public int customersSpawned = 0;
+    public int customersMax = 0;
     public float timer;
     private void Update()
     {
@@ -26,18 +27,18 @@ public class CustomersSpawner : MonoBehaviour
         }
         if (spawning)
         {
-            if (customersSpawned < randCustomersCount)
+            if (customersMax > customersSpawned)
             {
                 if(timer <= 0f)
                 {
-                    if (iManager.dayCounter == 0)
+                    if (iManager.dayCounter == 0 && customersSpawned < customersMax)
                     {
                         //normal
                         SpawnCustomer();
                         timer = 10f;
                         customersSpawned++;
                     }
-                    if (iManager.dayCounter != 0)
+                    if (iManager.dayCounter != 0 && customersSpawned < customersMax)
                     {
                         //special
                         if (onecSpec)
@@ -66,7 +67,7 @@ public class CustomersSpawner : MonoBehaviour
                 spawning = false;
             }
         }
-        if (GameObject.FindGameObjectsWithTag("Customer").Length == 0 && !spawning)
+        if (customersMax <= 0)
         {
             GetDay();
         }
@@ -76,9 +77,18 @@ public class CustomersSpawner : MonoBehaviour
         newSpawn = true;
         iManager.isNight = false;
     }
+    public void DecrementMax()
+    {
+        customersMax--;
+    }
+    public void DecrementCur()
+    {
+        customersSpawned--;
+    }
     public void RandomizedQuantity()
     {
         randCustomersCount = Random.Range(5, 11);
+        customersMax = randCustomersCount;
     }
     public void SpawnCustomer()
     {

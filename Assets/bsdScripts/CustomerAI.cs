@@ -12,6 +12,7 @@ public class CustomerAI : MonoBehaviour
     private Transform player;
     public Transform awayFromMap;
     public bool isSpecial;
+    public CustomersSpawner customers;
     private void Awake()
     {
         customerAI = this.gameObject.GetComponent<NavMeshAgent>();
@@ -19,11 +20,12 @@ public class CustomerAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         queueS = GameObject.Find("Q").GetComponent<Queue>();
         awayFromMap = GameObject.Find("AwayFromMap").GetComponent<Transform>();
+        customers = GameObject.Find("CustomerSpawn").GetComponent<CustomersSpawner>();
         Invoke("AwakeDel", Random.Range(0.1f, 0.3f));
     }
     private void Update()
     {
-        if (rid)
+        if (rid && state != "getOut")
         {
             RidOfCustomerFromQueue();
         }
@@ -41,7 +43,7 @@ public class CustomerAI : MonoBehaviour
         }
         if(state == "getOut")
         {
-            if(Vector3.Distance(this.gameObject.transform.position,player.position) > 30f)
+            if(Vector3.Distance(this.gameObject.transform.position,player.position) > 20f)
             {
                 Destroy(this.gameObject);
             }
@@ -52,6 +54,9 @@ public class CustomerAI : MonoBehaviour
     {
         queueS.isQueueAviable[currentPosInQueue] = false;
         customerAI.SetDestination(awayFromMap.position);
+        customers.DecrementMax();
+        customers.DecrementCur();
+        anim.SetBool("cS", true);
         state = "getOut";
     }
     public void AwakeDel()
