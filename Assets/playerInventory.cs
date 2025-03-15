@@ -11,6 +11,8 @@ public class playerInventory : MonoBehaviour
     public Transform outt;
     public GameObject podT;
 
+    public GameObject water;
+
     public void Update()
     {
         RaycastHit rh;
@@ -20,15 +22,21 @@ public class playerInventory : MonoBehaviour
             
             PickableObject obj = rh.collider.gameObject.GetComponent<PickableObject>();
             if(obj != null)
-                podT.GetComponentInChildren<TMP_Text>().text = "E   " + obj.text;
+            {
+
+            
+                podT.GetComponentInChildren<TMP_Text>().text = "E  " + obj.text;
                 podT.SetActive(true);
                
                 if(Input.GetKeyDown(KeyCode.E))
                 {   
                     if(obj.text == "Podnieś") pickup(obj);
                     else if (obj.text == "Nalej") Nalej(obj);
+                    else if (obj.text == "Otwórz") Otworz(obj);
+                    else if (obj.text == "Zamknij") Zamknij(obj);
                     
                 }
+            }
                
         }
         else {
@@ -44,9 +52,24 @@ public class playerInventory : MonoBehaviour
         // }
     }
 
+    public void Otworz(PickableObject obj)
+    {
+        obj.gameObject.GetComponentInChildren<Animator>().SetTrigger("open");
+        obj.text = "Nalej";
+    }
+
     public void Nalej(PickableObject obj)
     {
         Debug.Log("Nalano wode");
+        water.SetActive(true);
+        obj.text = "Zamknij";
+    }
+
+    public void Zamknij(PickableObject obj)
+    {
+        obj.gameObject.GetComponentInChildren<Animator>().SetTrigger("close");
+        obj.text = "Otwórz";
+        water.SetActive(false);
     }
 
     public void pickup(PickableObject obj)
