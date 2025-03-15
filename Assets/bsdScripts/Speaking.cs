@@ -6,11 +6,13 @@ public class Speaking : MonoBehaviour
     [SerializeField] private string whatKindOfDialog;
     [SerializeField] private UIManager uIManager;
     [SerializeField] private Order orderScript;
+    [SerializeField] private GameObject blob;
     private void Start()
     {
         uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        orderScript = GameObject.Find("OrderManager").GetComponent<Order>();
         // orderScript = GameObject.Find("Order").GetComponent<Order>();
-        SpeakAction();
+        //SpeakAction();
     }
     public void SpeakAction()
     {
@@ -46,7 +48,6 @@ public class Speaking : MonoBehaviour
     public void GetOrder()
     {
         //funkcja do odbierania zam�wien
-
     }
     
 }

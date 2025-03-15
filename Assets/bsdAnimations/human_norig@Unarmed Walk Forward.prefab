@@ -841,6 +841,7 @@ GameObject:
   - component: {fileID: 6193288881157972642}
   - component: {fileID: 1179390827341384123}
   - component: {fileID: 5109847088209950515}
+  - component: {fileID: -6100973011113252015}
   m_Layer: 0
   m_Name: human_norig@Unarmed Walk Forward
   m_TagString: Customer
@@ -907,6 +908,7 @@ MonoBehaviour:
   currentPosInQueue: 0
   awayFromMap: {fileID: 0}
   isSpecial: 0
+  customers: {fileID: 0}
 --- !u!195 &1179390827341384123
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -952,6 +954,21 @@ CapsuleCollider:
   m_Height: 1.67
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-6100973011113252015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5138240283882090588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68a15ddb1ad0ea4e85646ac332c3ce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatKindOfDialog: normal
+  uIManager: {fileID: 0}
+  orderScript: {fileID: 0}
 --- !u!1 &5691687858412427225
 GameObject:
   m_ObjectHideFlags: 0
